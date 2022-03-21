@@ -1,29 +1,32 @@
-//import express.js server module
+//relationships
 const express = require('express');
-//instantiate a server
-const app = express();
-//import mongooseJS library that will be used to create the models and integrate with MongoDB
 const mongoose = require('mongoose');
-//set a port to validate locally
+const db = require('./config/connection');
+const routes = require('./routes');
+
+//initialize
+const app = express();
 const PORT = process.env.PORT || 3001;
+const mongoose = require('mongoose');
 
-
+//middlewear
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-//importing routes
-app.use(require('./routes'));
+app.use(express.static(path.join(__dirname, "public")));
 
-// mongoose library connection to local mongo database
+////implement and use
+app.use(routes);
+
+//create connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/socialnetDB', {
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
-// log for mongoDB queries that are run
 mongoose.set('debug', true);
 
-
-// console log port listening to
-app.listen(PORT, () => console.log(`Connected on localhost PORT: ${PORT}`));
+db.once('open', () => {
+  app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}`);
+  });
+});

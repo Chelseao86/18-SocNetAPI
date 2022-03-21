@@ -1,9 +1,9 @@
+// this is the index in the api
 const router = require('express').Router();
+const user = require('./user-routes');
+const thought = require('./thought-routes');
 
-const thoughtRoutes = require('./thought-routes');
-const userRoutes = require('./user-routes');
-
-router.use('/thoughts', thoughtRoutes); // prefix of `/thought` to routes created in `thought-routes.js`
-router.use('/users', userRoutes);       //  prefix of `/users` to routes created in `user-routes.js`
+router.use('/users', user);
+router.use('/thoughts', thought);
 
 module.exports = router;

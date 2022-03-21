@@ -1,71 +1,41 @@
-// add  Types object to import ObjectID() value from the _id field
-const { Schema, model, Types } = require('mongoose');
-const moment = require('moment');
+// this is the Thought model
+const{Schema, model} = require('mongoose');
+// pulling reaction schema for 
+const sReaction = require('./Reaction');
+// pulling dateFormat for usage for thoughts/posts
+const date = require('../utils/dateFormat');
 
-
-const ReactionSchema = new Schema(
+const thoughtSchema = new Schema(
     {
-     // add a new customized id, different from its parent Thought _id
-      reactionId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
-      },
-      reactionBody: {
-        type: String,
-        required: true,
-        maxlength: 280
-      },
-      userName: {
-        type: String,
-        required: true,
-        trim: true
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now,
-        get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
-      }
-    }
-  );
-
-const ThoughtSchema = new Schema(
-      {
-        thoughtText: {
-          type: String,
-          required: true,
-          minlength:1,      // criteria
-          maxlength: 280    // criteria 
+        thoughtText: { // text for each thought post
+            type: String, // data type string
+            required: 'You need to leave a thought!', // makes string required
+            minlength: 1, // must be more than 1 character
+            maxlength: 280 // must be less than 280 characters
         },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-           // add getters to format the date through a Moment method
-          get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
+        createdAt: { // date value for when a post is created
+            type: Date, // data type date
+            default: Date.now, // sets default value to current timestamp of when a thought is created
+            get: thoughtTime => date(thoughtTime) // getter formats the thoughtTime on the query
         },
-        userName: {   
-            type: String,
-            required: true
-          },
-        reactions: [ReactionSchema]
-      },
-        // Virtual added, which is separated from grouping
-      // this Virtual is for count of friends
-      {
+        username: { // user name of poster
+            type: String, // data type string
+            required: true // user name is required
+        },
+        reactions: [sReaction] // array of nested reactions from reaction schema
+    },
+    {
         toJSON: {
-          virtuals: true,  // (2) virtual set to true
-          getters: true   // work with moment.js, date formatter Getter as per above
+            getters: true
         },
         id: false
-      }   
- );
+    }
+);
 
-// (1) virtual definition to add Reaction count
-ThoughtSchema.virtual('reactionCount').get(function() {
+thoughtSchema.virtual('reactionCount').get(function(){ // retrieves the length of amount of reactions 
     return this.reactions.length;
 });
 
+const Thought = model('Thought', thoughtSchema);
 
-// create Thought model using Thoughtschema
-const Thought = model('Thought', ThoughtSchema);
-// export the Thought model
 module.exports = Thought;

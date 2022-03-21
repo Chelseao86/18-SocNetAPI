@@ -1,16 +1,11 @@
-// importing express module
+// this is the index in the routes 
 const router = require('express').Router();
+const api = require('./api');
 
-//importing routes
-//API routes from /api/index.js
-const apiRoutes = require('./api');
-
-
-// adding  `/api` for all api routes f/ `api` dir
-router.use('/api', apiRoutes);
+router.use('/api', api);
 
 router.use((req, res) => {
-    res.status(404).send('<h1>404 error</h1>');
+    return res.send('Wrong route');
 });
 
 module.exports = router;
