@@ -1,0 +1,29 @@
+{
+  "name": "social-network-api",
+  "version": "1.0.0",
+  "description": "social-network-api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chelseao86/18-SocNetAPI.git"
+  },
+  "keywords": [
+    "social-network-api"
+  ],
+  "author": "Chelseao86",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chelseao86/18-SocNetAPI/issues"
+  },
+  "homepage": "https://github.com/chelseao86/18-SocNetAPI#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.15"
+  },
+  "devDependencies": {}
+}
