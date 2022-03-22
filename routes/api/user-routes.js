@@ -1,4 +1,4 @@
-// this is the user routes
+//Relationship - user routes
 const router = require('express').Router();
 const {
   getUsers,
@@ -6,16 +6,13 @@ const {
   createUser,
   updateUser,
   addFriend,
-  unFriend,
+  // unFriend,
 } = require('../../controllers/user-controller');
 
-// /api/users
+//User routes
 router.route('/').get(getUsers).post(createUser);
-
-// /api/users/:userId
 router.route('/:userId').get(getOneUser).put(updateUser);
+// router.route('/:userId/friends/:friendId').post(addFriend).delete(unFriend);
 
-// /api/users/:userId/friends/:friendId
-router.route('/:userId/friends/:friendId').post(addFriend).delete(unFriend);
-
+//Export user routes
 module.exports = router;

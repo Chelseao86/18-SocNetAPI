@@ -1,4 +1,4 @@
-// This is the thought controller
+// Thought controller
 const{User, Thought} = require('../models');
 
 const tController = {
@@ -66,23 +66,6 @@ const tController = {
           if (!dbThoughtData) {
             return res.status(404).json({ message: 'No thought with this id!' });
           }
-  
-          // remove thought id from user's `thoughts` field
-          return User.findOneAndUpdate(
-            { thoughts: req.params.thoughtId },
-            { $pull: { thoughts: req.params.thoughtId } },
-            { new: true }
-          );
-        })
-        .then((dbUserData) => {
-          if (!dbUserData) {
-            return res.status(404).json({ message: 'Thought created but no user with this id!' });
-          }
-          res.json({ message: 'Thought successfully deleted!' });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
         });
     },
     

@@ -1,5 +1,5 @@
 {
-  "name": "social-network-api",
+  "name": "18-socnetapi",
   "version": "1.0.0",
   "description": "social-network-api",
   "main": "server.js",
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/chelseao86/18-SocNetAPI.git"
   },
   "keywords": [
-    "social-network-api"
+    ""
   ],
   "author": "Chelseao86",
   "license": "MIT",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/chelseao86/18-SocNetAPI#readme",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "mongoose": "^5.10.15",

@@ -1,28 +1,27 @@
-// this is the Thought model
+//Set up imports
 const{Schema, model} = require('mongoose');
-// pulling reaction schema for 
 const sReaction = require('./Reaction');
-// pulling dateFormat for usage for thoughts/posts
 const date = require('../utils/dateFormat');
 
+//Set up object
 const thoughtSchema = new Schema(
     {
-        thoughtText: { // text for each thought post
-            type: String, // data type string
-            required: 'You need to leave a thought!', // makes string required
-            minlength: 1, // must be more than 1 character
-            maxlength: 280 // must be less than 280 characters
+        thoughtText: { 
+            type: String, 
+            required: 'You need to leave a thought!', 
+            minlength: 1, 
+            maxlength: 280
         },
-        createdAt: { // date value for when a post is created
-            type: Date, // data type date
-            default: Date.now, // sets default value to current timestamp of when a thought is created
-            get: thoughtTime => date(thoughtTime) // getter formats the thoughtTime on the query
+        createdAt: { 
+            type: Date, 
+            default: Date.now,
+            get: thoughtTime => date(thoughtTime)
         },
-        username: { // user name of poster
-            type: String, // data type string
-            required: true // user name is required
+        userId: {
+            type: String,
+            required: true
         },
-        reactions: [sReaction] // array of nested reactions from reaction schema
+        reactions: [sReaction]
     },
     {
         toJSON: {
@@ -32,10 +31,10 @@ const thoughtSchema = new Schema(
     }
 );
 
-thoughtSchema.virtual('reactionCount').get(function(){ // retrieves the length of amount of reactions 
+thoughtSchema.virtual('reactionCount').get(function(){
     return this.reactions.length;
 });
 
+//Export
 const Thought = model('Thought', thoughtSchema);
-
 module.exports = Thought;

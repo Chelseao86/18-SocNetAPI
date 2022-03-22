@@ -1,4 +1,4 @@
-// This is the user controller
+// User controller
 const{ User, Thought} = require('../models');
 
 const uController = {
@@ -39,7 +39,7 @@ const uController = {
           res.status(500).json(err);
         });
     },
-    updateUser(req, res){ // Update a user
+    updateUser(req, res){ // update a user
         User.findOneAndUpdate(
             { _id: req.params.userId },
             {
@@ -60,32 +60,6 @@ const uController = {
               console.log(err);
               res.status(500).json(err);
             });
-    },
-    addFriend(req, res){ // add friend to friends list
-        User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { friends: req.params.friendId } }, { new: true })
-        .then((dbUserData) => {
-          if (!dbUserData) {
-            return res.status(404).json({ message: 'No user with this id!' });
-          }
-          res.json(dbUserData);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
-        });
-    },
-    unFriend(req, res){ // remove friend from friends list
-        User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } }, { new: true })
-        .then((dbUserData) => {
-          if (!dbUserData) {
-            return res.status(404).json({ message: 'No user with this id!' });
-          }
-          res.json(dbUserData);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
-        });
     },
 };
 
